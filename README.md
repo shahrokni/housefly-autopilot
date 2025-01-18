@@ -4,6 +4,26 @@ In a simple drone, a pilot only controls the speed of the motors. By adjusting t
 
 ![housefly autopilot](./public/image/logo.webp)
 
+# What is Housefly Drone?
+
+The Housefly Drone is a prototype drone designed specifically for research and development of autopilot systems. It focuses on providing a stable, lightweight, and cost-effective platform for testing autonomous flight capabilities indoors. The Housefly Drone emphasizes simplicity, functionality, and safety, making it an ideal choice for prototyping and developing cutting-edge autopilot systems. Below is a concise overview of its design and features:
+
+## Purpose
+
+- To serve as a platform for developing and testing autopilot algorithms.
+- Operates exclusively indoors, such as in a lab or a large room, under stable environmental conditions.
+
+## Key Features
+
+- Basic maneuvers: Takeoff, landing, stable hovering, 4-direction movement.
+- Simultaneous movement and altitude adjustments (if feasible).
+- Real-time, bidirectional communication with a Ground Control Unit (GCU)
+
+## Payload and Build:
+
+- No additional payload or equipment beyond the base configuration.
+- Lightweight, DIY chassis crafted from flexible and strong materials.
+
 # What is GCU?
 
 A Ground Control Unit (GCU) receives the drone's condition data and controls it by sending a set of commands through wireless communication.

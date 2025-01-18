@@ -1,6 +1,6 @@
 # Housefly Autopilot
 
-In a simple drone, a pilot only controls the speed of the motors. By adjusting the motors' speed individually, they can maneuver the flying vehicle. In the real world, pilots make each action based on the perceived result of their previous actions until the goal is achieved. An autopilot’s perception is based on sensor data, such as angle, position, altitude, etc. This approach aligns well with the goals of achieving **stable maneuverability** while providing a **safer** testing environment. The ability to monitor and intervene in real-time makes it ideal for early-stage development, where issues and edge cases are more likely to arise. Additionally, the insights gained from this setup can help refine the onboard systems if we decide to pivot to a fully autonomous onboard solution in the future.
+In a simple drone, a pilot only controls the speed of the motors. By adjusting the motors' speed individually, they can maneuver the flying vehicle. In the real world, pilots make each action based on the perceived result of their previous actions until the goal is achieved. An autopilot’s perception is based on sensor data, such as angle, position, altitude, etc.
 
 ![housefly autopilot](./public/image/logo.webp)
 
@@ -27,6 +27,7 @@ The Housefly Drone is a prototype drone designed specifically for research and d
 # What is GCU?
 
 A Ground Control Unit (GCU) receives the drone's condition data and controls it by sending a set of commands through wireless communication.
+This approach aligns well with the goals of achieving **stable maneuverability** while providing a **safer** testing environment. The ability to monitor and intervene in real-time makes it ideal for early-stage development, where issues and edge cases are more likely to arise. Additionally, the insights gained from this setup can help refine the onboard systems if we decide to pivot to a fully autonomous onboard solution in the future.
 
 ## Pros:
 

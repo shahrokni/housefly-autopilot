@@ -1,5 +1,3 @@
-**_This ARTICLE MAY INCLUDE SOME BASIC ELECTRONIC TECHNICAL TERMS!_**
-
 # Housefly Drone
 
 To test the **Autopilot** software, a test environment or an actual flying vehicle is required. This flying vehicle is called the **Housefly Drone**. The **Housefly Drone** is a cost-efficient, lightweight, and compact quadcopter designed to perform basic maneuvers, including takeoff, landing, stable hovering, and transitions.
@@ -20,15 +18,23 @@ To test the **Autopilot** software, a test environment or an actual flying vehic
 
 ## Bill of Material
 
-- ESP8266 Wireless Module 1X
-- MPU6050 1X
-- HC SR04 1X
-- Arduino 2560 1X
-- Racerstar BR2205 2300KV Brush-less Motor 4X
-- Racerstar RS20A 20A ESC 4X
-- Gemfan 5030 (5x3) 2-blades propellers 4X
-- Turnigy 3S 1500mAh 30C 1X
-- Matek PDB-XT60 with 5V/12V BEC 1X
+- [ ] ESP8266 Wireless Module 1X (**_Optional_**)
+- [ ] MPU6050 1X
+- [ ] HC SR04 1X
+- [ ] Arduino 2560 1X
+  - [ ] Test Arduino Uno
+- [ ] Racerstar BR2205 2300KV Brush-less Motor 4X
+- [ ] Racerstar RS20A 20A ESC 4X
+- [ ] Gemfan 5030 (5x3) 2-blades propellers 4X
+- [ ] Turnigy 3S 1500mAh 30C 1X
+- [ ] Matek PDB-XT60 with 5V/12V BEC 1X
+- [ ] XT60 connectors
+- [ ] JST connectors
+- [ ] Crocodile clips
+- [ ] Silicone wires
+- [ ] Jumper wires
+- [ ] Lipo Bag
+- [ ] Lipo charger
 
 ### ESP8266 Wireless Module
 
@@ -57,6 +63,18 @@ A high-performance brush-less DC (BLDC) motor commonly used in racing drones and
 - **Stator Size**: 22mm diameter, 5mm height
 - **Shaft Diameter**: 5mm
 - **Mounting Pattern**: Standard quadcopter motor mounting
+
+In the context of a brush-less DC motor (BLDC), "1000kv" refers to the motor's "KV rating," which is the speed constant of the motor. It is defined as the number of revolutions per minute (RPM) that the motor will turn per volt of electrical input, without any load attached.
+
+- **Higher KV motors**: Spin faster but have less torque, making them ideal for lightweight, high-speed applications like racing drones.
+- **Lower KV motors**: Spin slower but provide higher torque, suitable for heavier loads or applications requiring more thrust, like aerial photography drones.
+
+Torque is a measure of rotational force. It quantifies how much a force causes an object to rotate around an axis. In simpler terms, torque is what makes something spin or turn, like tightening a bolt with a wrench or the rotation of a car's wheels.
+The formula for torque (ττ) is
+
+```
+τ=r×F×sin(θ)
+```
 
 #### Thrust per Motor
 
@@ -90,3 +108,18 @@ LiPo battery
 ### Matek PDB-XT60 with 5V/12V BEC
 
 The Matek PDB-XT60 is a Power Distribution Board (PDB) designed for quadcopters and drones, providing stable power distribution to ESCs, flight controllers, and other electronic components.
+
+## Tools and materials
+
+- [ ] Balsa wood
+- [ ] Cutter
+- [ ] Diagonal pliers
+- [ ] Tape
+- [ ] Glue gun
+- [ ] Saw
+- [ ] Plastic straps
+- [ ] Multifunction drill
+- [ ] Sand paper
+- [ ] Bolts and nuts
+- [ ] Wrench box
+- [ ] Bread board

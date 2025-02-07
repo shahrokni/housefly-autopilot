@@ -26,6 +26,10 @@ The Transition state or `TRN` refers to a temporary state in which the drone mov
 
 The Idle state or `IDLE` refers to a stable state in which the drone hovers in place.
 
+### Test state
+
+The Test state or `TST` refers to a temporary state in which the drone takes precautionary measures. This state should only be set if the drone's current state is `GND`.
+
 ### Halt state
 
 The Halt state or `HLT` refers to an immediate emergency state in which all four rotors are turned off at once. Due to safety reasons, a drone may enter this state at any time.
@@ -45,14 +49,5 @@ The ATC is capable of sending instructions to the drone. This process is unilate
 - Safe Instructions (SI): These do not affect the autopilot state machine. Example: `ECHO`
 - Critical Instructions (CI): These affect the autopilot state machine. Example: `LAND`
 - Emergency Instructions (EI): These are executed immediately by the drone, regardless of the current state. Example: `HALT`
-
-- SI
-  - ECHO (If available)
-- CI
-  - LAND
-  - TAKEOFF
-  - MV
-- EI
-  - HALT
 
 ![housefly autopilot](./public/image/logo.webp)

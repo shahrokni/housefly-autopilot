@@ -1,44 +1,50 @@
 # Housefly Autopilot
 
-In a simple drone, a pilot only controls the speed of the motors. By adjusting the motors' speed individually, they can maneuver the flying vehicle. In the real world, pilots make each action based on the perceived result of their previous actions until the goal is achieved. An autopilot’s perception is based on sensor data, such as angle, position, altitude, etc.
+In a simple drone (quadcopter), a pilot only controls the speed of the motors. By adjusting the motors' speed individually, they can maneuver the flying vehicle. In the real world, pilots make each action based on the perceived result of their previous actions until the goal is achieved. An autopilot’s perception is based on sensor data, such as angle, position, altitude, etc.
 
-![housefly autopilot](./public/image/logo.webp)
+## Housefly Autopilot - State machine
+
+The autopilot maintains an internal state machine that determines whether an instruction received from the ATC should be executed or not. Due to safety measures, **_received instructions are never queued!_** This means they are either executed immediately or rejected. For instance, a drone should not be able to change its destination if it is already in the `Transition` state.
+
+### Ground state
+
+The Ground state or `GND` refers to a stable state in which the drone is on the ground with all four rotors turned off. This should be the drone's initial state. Additionally, a successful landing operation should eventually set the state to `GND`.
+
+### Take off state
+
+The Takeoff state or `TO` refers to a temporary state in which the drone is lifting off the ground. This state should only be set if the drone's current state is `GND`. A successful takeoff operation eventually sets the state to `IDLE`.
+
+### Landing state
+
+The Landing state or `LND` refers to a temporary state in which the drone is descending to land on the ground. A successful landing operation eventually sets the state to `GND`.
+
+### Transition state
+
+The Transition state or `TRN` refers to a temporary state in which the drone moves from one coordinate in space to another. This state should only be set if the drone's current state is `IDLE`.
+
+### Idle state
+
+The Idle state or `IDLE` refers to a stable state in which the drone hovers in place.
 
 # What is Housefly Drone?
 
-The Housefly Drone is a prototype drone designed specifically for research and development of autopilot systems. It focuses on providing a stable, lightweight, and cost-effective platform for testing autonomous flight capabilities indoors. The Housefly Drone emphasizes simplicity, functionality, and safety, making it an ideal choice for prototyping and developing cutting-edge autopilot systems. Below is a concise overview of its design and features:
+The Housefly Drone is a prototype drone designed specifically for research and development of autopilot systems. It focuses on providing a stable, lightweight, and cost-effective platform for testing autonomous flight capabilities indoors. The Housefly Drone emphasizes simplicity, functionality, and safety, making it an ideal choice for prototyping and developing cutting-edge autopilot systems.
 
-## Purpose
+# What is ATC?
 
-- To serve as a platform for developing and testing autopilot algorithms.
-- Operates exclusively indoors, such as in a lab or a large room, under stable environmental conditions.
+In the context of the `Housefly Lab`, the ATC refers to any form of electromagnetic transmission control used to send signals and instructions to the `Housefly Drone`. Unlike traditional aviation definitions, communication between the so-called tower and the flying vehicle in this setup is unilateral, flowing only from the ATC to the drone.
 
-## Key Features
+# Housefly Autopilot
 
-- Basic maneuvers: Takeoff, landing, stable hovering, 4-direction movement.
-- Simultaneous movement and altitude adjustments (if feasible).
-- Real-time, bidirectional communication with a Ground Control Unit (GCU)
+The drone maintains an internal state
 
-## Payload and Build:
+The states are:
 
-- No additional payload or equipment beyond the base configuration.
-- Lightweight, DIY chassis crafted from flexible and strong materials.
+- Idle
+  - Adjusting
+- Ground
+- Transition
+  - Taking off
+  - Landing
 
-# What is GCU?
-
-A Ground Control Unit (GCU) receives the drone's condition data and controls it by sending a set of commands through wireless communication.
-This approach aligns well with the goals of achieving **stable maneuverability** while providing a **safer** testing environment. The ability to monitor and intervene in real-time makes it ideal for early-stage development, where issues and edge cases are more likely to arise. Additionally, the insights gained from this setup can help refine the onboard systems if we decide to pivot to a fully autonomous onboard solution in the future.
-
-## Pros:
-
-- Uses a more powerful and flexible computer, like a Raspberry Pi
-- No need to update the drone's software directly
-- Enables longer flights by saving battery (reduces energy consumption for computation)
-- Allows better online and offline flight monitoring and analysis
-- Supports intervention and manual control when necessary
-
-## Cons
-
-- Requires longer development time
-- More expensive due to the GCU
-- Limited by the wireless coverage area
+![housefly autopilot](./public/image/logo.webp)

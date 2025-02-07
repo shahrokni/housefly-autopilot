@@ -26,6 +26,10 @@ The Transition state or `TRN` refers to a temporary state in which the drone mov
 
 The Idle state or `IDLE` refers to a stable state in which the drone hovers in place.
 
+### Halt state
+
+The Halt state or `HLT` refers to an immediate emergency state in which all four rotors are turned off at once. Due to safety reasons, a drone may enter this state at any time.
+
 # What is Housefly Drone?
 
 The Housefly Drone is a prototype drone designed specifically for research and development of autopilot systems. It focuses on providing a stable, lightweight, and cost-effective platform for testing autonomous flight capabilities indoors. The Housefly Drone emphasizes simplicity, functionality, and safety, making it an ideal choice for prototyping and developing cutting-edge autopilot systems.
@@ -34,17 +38,6 @@ The Housefly Drone is a prototype drone designed specifically for research and d
 
 In the context of the `Housefly Lab`, the ATC refers to any form of electromagnetic transmission control used to send signals and instructions to the `Housefly Drone`. Unlike traditional aviation definitions, communication between the so-called tower and the flying vehicle in this setup is unilateral, flowing only from the ATC to the drone.
 
-# Housefly Autopilot
-
-The drone maintains an internal state
-
-The states are:
-
-- Idle
-  - Adjusting
-- Ground
-- Transition
-  - Taking off
-  - Landing
+## ATC Commands
 
 ![housefly autopilot](./public/image/logo.webp)

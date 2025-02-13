@@ -3,6 +3,8 @@
 
 typedef struct {
   unsigned char weight;
+  unsigned char service_ceiling;
+  unsigned char safe_landing_altitude;
 } Vehicle;
 
 typedef struct {

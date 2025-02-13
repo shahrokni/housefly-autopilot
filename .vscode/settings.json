@@ -8,6 +8,10 @@
     "Quadcopter",
     "quadcopters",
     "Racerstar",
+    "SFTYTSTFLG",
     "Turnigy"
-  ]
+  ],
+  "files.associations": {
+    "state_managment.h": "c"
+  }
 }

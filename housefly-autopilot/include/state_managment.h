@@ -2,12 +2,17 @@
 #define AUTOPILOT_HF_STATE_MANAGEMENT
 
 typedef struct {
-  unsigned char flight_flags;
+  unsigned char weight;
+} Vehicle;
+
+typedef struct {
+  unsigned char flags;
   unsigned char state;
-} FlightState;
+  Vehicle *vehicle;
+} FlightStatus;
 
-FlightState *init();
+FlightStatus *init();
 
-void change_state(FlightState *fs);
+void change_state(FlightStatus *fs);
 
 #endif

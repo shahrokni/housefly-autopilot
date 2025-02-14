@@ -9,6 +9,10 @@ This property, as its name suggests, determines the service ceiling of the `Flyi
 > [!WARNING]
 > For more information review `reaction_latency`
 
+## reaction_latency
+
+As mentioned earlier, the autopilot perceives its environment through sensors and acts accordingly. The `reaction_latency` property introduces an `intentional delay`, measured in `milliseconds`, between these two critical steps. Since some actions take time to influence the flight dynamics, both short and long delays can lead to instability or even incidents. The property's type is `unsigned char`, meaning it can range from 0 to 255. However, values below 150 are ignored by the autopilot. Although a higher `reaction_latency` may reduce instability, it can introduce (tolerable) inaccuracies. With a well-designed drone, a lower `reaction_latency` may enable smoother execution of acrobatic maneuvers.
+
 ## Flight Flags
 
 | Flag Bit | Flag Symbol  | Description         | 1     | 0       | Activation    |

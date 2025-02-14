@@ -12,6 +12,7 @@
     "Turnigy"
   ],
   "files.associations": {
-    "state_managment.h": "c"
+    "state_managment.h": "c",
+    "state_management.h": "c"
   }
 }

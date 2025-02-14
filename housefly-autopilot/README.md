@@ -1,3 +1,11 @@
+## How does autopilot work?
+
+As mentioned earlier, instructions are sent by the ATC and received by the drone. Based on the drone’s current state, the autopilot either executes or rejects the instructions.
+
+It is important to understand that, due to safety measures, no instructions are queued for later execution. The only exception is the `HALT` emergency instruction. Since instructions may change the drone's state, their feasibility is assessed first. If they do not comply with the `State Transition Table`, they are rejected.
+
+Whenever the state changes, the `Control Unit` is notified. The `CU` is responsible for executing instructions by calculating the RPM for individual motors based on sensor data. Finally, once the instruction has been fully executed, the CU sends a request to State Management to update the state.
+
 ## Flying Vehicle Configuration 🪰
 
 This read-only configuration helps the autopilot system make the right decisions during flight. It is strongly recommended that developers set up the configuration and build the library according to their flying vehicle's capacity and limitations.
@@ -27,6 +35,8 @@ The autopilot maintains an internal state machine that determines whether an ins
 
 The Ground state or `GND` refers to a stable state in which the drone is on the ground with all four rotors turned off. This should be the drone's initial state. Additionally, a successful landing operation should eventually set the state to `GND`.
 
+The `GND` state cannot be requested by an external actor (such as ATC). It can only be set by the autopilot.
+
 ### Take off state
 
 The Takeoff state or `TO` refers to a temporary state in which the drone is lifting off the ground. This state should only be set if the drone's current state is `GND`. A successful takeoff operation eventually sets the state to `IDLE`.
@@ -38,11 +48,11 @@ The Landing state or `LND` refers to a temporary state in which the drone is des
 
 ### Transition state
 
-The Transition state or `TRN` refers to a temporary state in which the drone moves from one coordinate in space to another. This state should only be set if the drone's current state is `IDLE`.
+The Transition state or `TRN` refers to a temporary state in which the drone moves from one coordinate in space to another. This state should only be set if the drone's current state is `IDLE`. A successful transition operation eventually sets the state to `IDLE`.
 
 ### Idle state
 
-The Idle state or `IDLE` refers to a stable state in which the drone hovers in place.
+The Idle state, or IDLE, refers to a stable condition in which the drone hovers in place. The request to transition to the `IDLE` state can **only** be made internally by the autopilot.
 
 ### Test state
 
@@ -52,12 +62,14 @@ The Test state or `TST` refers to a temporary state in which the drone takes pre
 
 The Halt state or `HLT` refers to an immediate emergency state in which all four rotors are turned off at once. Due to safety reasons, a drone may enter this state at any time.
 
-| State | State Symbol | Type      | From               | Flags        | To     |
-| ----- | ------------ | --------- | ------------------ | ------------ | ------ |
-| 0     | `GND`        | Stable    | `INITIAL, LND`     |              |        |
-| 1     | `TO`         | Temporary | `GND`              | `SFTYTSTFLG` | `IDLE` |
-| 2     | `LND`        | Temporary | `IDLE`             |              | `GND`  |
-| 3     | `TRN`        | Temporary | `IDLE`             |              | `IDLE` |
-| 4     | `IDLE`       | Stable    | `TO, TRN`          |              |        |
-| 5     | `TST`        | Temporary | `GND`              |              | `GND`  |
-| 6     | `HLT`        | Stable    | `ALL_OTHER_STATES` |              |        |
+### State Transition Table
+
+| State | State Symbol | Type      | From               | Actors            | Flags        | To     |
+| ----- | ------------ | --------- | ------------------ | ----------------- | ------------ | ------ |
+| 0     | `GND`        | Stable    | `INITIAL, LND`     | Internal          |              |
+| 1     | `TO`         | Temporary | `GND`              | External          | `SFTYTSTFLG` | `IDLE` |
+| 2     | `LND`        | Temporary | `IDLE`             | External          | `GND`        |
+| 3     | `TRN`        | Temporary | `IDLE`             | External          | `IDLE`       |
+| 4     | `IDLE`       | Stable    | `TO, TRN`          | Internal          |              |
+| 5     | `TST`        | Temporary | `GND`              | External          | `GND`        |
+| 6     | `HLT`        | Stable    | `ALL_OTHER_STATES` | External\Internal |              |

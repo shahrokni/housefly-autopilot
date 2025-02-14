@@ -2,9 +2,9 @@
 
 ## Flight Flags
 
-| Flag Bit  | Flag Symbol  | Description         | 1     | 0       | Activation    |
-| --------- | ------------ | ------------------- | ----- | ------- | ------------- |
-| ----0---- | `SFTYTSTFLG` | Initial safety test | Valid | Invalid | OR 0b00000001 |
+| Flag Bit | Flag Symbol  | Description         | 1     | 0       | Activation    |
+| -------- | ------------ | ------------------- | ----- | ------- | ------------- |
+| `0`      | `SFTYTSTFLG` | Initial safety test | Valid | Invalid | OR 0b00000001 |
 
 ## Housefly Autopilot - State machine
 

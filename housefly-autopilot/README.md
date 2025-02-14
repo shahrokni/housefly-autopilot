@@ -1,4 +1,13 @@
-## Vehicle
+## Flying Vehicle Configuration 🪰
+
+This read-only configuration helps the autopilot system make the right decisions during flight. It is strongly recommended that developers set up the configuration and build the library according to their flying vehicle's capacity and limitations.
+
+## service_ceiling
+
+This property, as its name suggests, determines the service ceiling of the `Flying Vehicle`. The property's type is `unsigned char`, meaning it can range from 0 to 255. When divided by 10, the result represents the `service_ceiling` in `meters`. The configured value should be at least 10 (equivalent to 1 meter); otherwise, the initial safety test will fail. For safety reasons, the default value is set to 20. However, be aware that `reaction_latency` may affect the accuracy of the service_ceiling.
+
+> [!WARNING]
+> For more information review `reaction_latency`
 
 ## Flight Flags
 

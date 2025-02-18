@@ -23,19 +23,53 @@ typedef struct {
   Vehicle *vehicle;
 } FlightStatus;
 
+/**
+ * @brief Sets the safety test flag to 1
+ * @param[out] flags
+ * @return void
+ */
 void set_sftytstflg(unsigned char *flags);
 
+/**
+ * @brief Resets the safety test flag
+ * @param[out] flags
+ * @return void
+ */
 void reset_sftytstflg(unsigned char *flags);
 
+/**
+ * @brief Resets all flags
+ * @param[out] flags
+ * @return void
+ */
 void reset_flags(unsigned char *flags);
 
+/**
+ * @brief Resets the flight state. The value will be set GND_STAT
+ * @param[out] current_state
+ * @return void
+ */
 void reset_state(FlightState *current_state);
 
+/**
+ * @brief Sets the flight state to the requested state
+ * @param[in,out] curren_state
+ * @param new_state
+ * @return void
+ */
 void set_requested_state(FlightState *current_state, FlightState new_state,
-                         const unsigned char flags);
+                         unsigned char flags);
 
+/**
+ *@brief Validates requested sate. Returns either 1 or 0 for which mean valid
+ * and invalid respectively
+ *@param current_state
+ *@param new_state
+ *@param flags
+ *@return 1 if valid and 0 if invalid
+ */
 char validate_requested_state(FlightState current_state, FlightState new_state,
-                              const unsigned char flags);
+                              unsigned char flags);
 
 FlightStatus *init();
 

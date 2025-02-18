@@ -6,18 +6,25 @@ void set_sftytstflg(unsigned char *flags) { *flags |= (1 << 0); }
 
 void reset_sftytstflg(unsigned char *flags) { *flags &= ~(1 << 0); }
 
-void reset_flags(unsigned char *flags) { *flags = 0; }
+void reset_flags(unsigned char *flags) { *flags = 0x00; }
 
 void reset_state(FlightState *current_state) { *current_state = GND_STAT; }
 
 void set_requested_state(FlightState *current_state, FlightState new_state,
-                         const unsigned char flags) {}
+                         unsigned char flags) {
+  if (validate_requested_state(*current_state, new_state, flags)) {
+    *current_state = new_state;
+  }
+}
 
 char validate_requested_state(FlightState current_state, FlightState new_state,
-                              const unsigned char flags) {
+                              unsigned char flags) {
   switch (new_state) {
   case GND_STAT:
-    return (current_state == NON_STAT || current_state == LND_STAT) ? 1 : 0;
+    return (current_state == NON_STAT || current_state == LND_STAT ||
+            current_state == TST_STAT)
+               ? 1
+               : 0;
   case TO_STAT:
     return (current_state == GND_STAT && (flags & 0x01)) ? 1 : 0;
   case LND_STAT:

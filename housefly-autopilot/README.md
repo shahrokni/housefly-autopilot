@@ -64,12 +64,12 @@ The Halt state or `HLT` refers to an immediate emergency state in which all four
 
 ### State Transition Table
 
-| State | State Symbol | Type      | From               | Actors            | Flags        | To     |
-| ----- | ------------ | --------- | ------------------ | ----------------- | ------------ | ------ |
-| 0     | `GND`        | Stable    | `INITIAL, LND`     | Internal          |              |
-| 1     | `TO`         | Temporary | `GND`              | External          | `SFTYTSTFLG` | `IDLE` |
-| 2     | `LND`        | Temporary | `IDLE`             | External          |              | `GND`  |
-| 3     | `TRN`        | Temporary | `IDLE`             | External          |              | `IDLE` |
-| 4     | `IDLE`       | Stable    | `TO, TRN`          | Internal          |              |
-| 5     | `TST`        | Temporary | `GND`              | External          |              | `GND`  |
-| 6     | `HLT`        | Stable    | `ALL_OTHER_STATES` | External\Internal |              |
+| State | State Symbol | Type      | From                | Actors            | Flags        | To     |
+| ----- | ------------ | --------- | ------------------- | ----------------- | ------------ | ------ |
+| 0     | `GND`        | Stable    | `INITIAL, LND, TST` | Internal          |              |
+| 1     | `TO`         | Temporary | `GND`               | External          | `SFTYTSTFLG` | `IDLE` |
+| 2     | `LND`        | Temporary | `IDLE`              | External          |              | `GND`  |
+| 3     | `TRN`        | Temporary | `IDLE`              | External          |              | `IDLE` |
+| 4     | `IDLE`       | Stable    | `TO, TRN`           | Internal          |              |
+| 5     | `TST`        | Temporary | `GND`               | External          |              | `GND`  |
+| 6     | `HLT`        | Stable    | `ALL_OTHER_STATES`  | External\Internal |              |

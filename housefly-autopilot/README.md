@@ -68,8 +68,8 @@ The Halt state or `HLT` refers to an immediate emergency state in which all four
 | ----- | ------------ | --------- | ------------------ | ----------------- | ------------ | ------ |
 | 0     | `GND`        | Stable    | `INITIAL, LND`     | Internal          |              |
 | 1     | `TO`         | Temporary | `GND`              | External          | `SFTYTSTFLG` | `IDLE` |
-| 2     | `LND`        | Temporary | `IDLE`             | External          | `GND`        |
-| 3     | `TRN`        | Temporary | `IDLE`             | External          | `IDLE`       |
+| 2     | `LND`        | Temporary | `IDLE`             | External          |              | `GND`  |
+| 3     | `TRN`        | Temporary | `IDLE`             | External          |              | `IDLE` |
 | 4     | `IDLE`       | Stable    | `TO, TRN`          | Internal          |              |
-| 5     | `TST`        | Temporary | `GND`              | External          | `GND`        |
+| 5     | `TST`        | Temporary | `GND`              | External          |              | `GND`  |
 | 6     | `HLT`        | Stable    | `ALL_OTHER_STATES` | External\Internal |              |

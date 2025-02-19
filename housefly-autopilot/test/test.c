@@ -148,6 +148,36 @@ void should_validation_return_true_for_new_state_LND() {
   }
 }
 
+void should_validation_return_false_for_new_state_TRN() {
+  FlightState new_state = TRN_STAT;
+  FlightState possible_invalid_current_states[] = {
+      GND_STAT, TO_STAT, TRN_STAT, LND_STAT, NON_STAT, TST_STAT, HLT_STAT};
+
+  int len = sizeof(possible_invalid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_invalid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 0, "Validation should return 0 (invalid)");
+    }
+  }
+}
+
+void should_validation_return_true_new_state_TRN() {
+  FlightState new_state = TRN_STAT;
+  FlightState possible_valid_current_states[] = {IDLE_STAT};
+
+  int len = sizeof(possible_valid_current_states) / sizeof(int);
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_valid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 1, "Validation should return 1 (valid)");
+    }
+  }
+}
+
 void setUp(void) {}
 void tearDown(void) {}
 
@@ -164,5 +194,8 @@ int main() {
   RUN_TEST(should_validation_return_true_for_new_state_TO);
   RUN_TEST(should_validation_return_false_for_new_state_LND);
   RUN_TEST(should_validation_return_true_for_new_state_LND);
+  RUN_TEST(should_validation_return_false_for_new_state_TRN);
+  RUN_TEST(should_validation_return_true_new_state_TRN);
+
   return UNITY_END();
 }

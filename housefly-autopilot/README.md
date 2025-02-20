@@ -1,12 +1,41 @@
-## How does autopilot work?
+# Housefly Autopilot
 
-As mentioned earlier, instructions are sent by the ATC and received by the drone. Based on the drone’s current state, the autopilot either executes or rejects the instructions.
+Welcome to the `Housefly Autopilot` library!
+Housefly Autopilot is a C library designed to enable autonomous control of standard four-rotor drones.
 
+## Overview
+
+The library **perceives** the world through sensor **data**, **understands** the current **goal** or destination, and **acts** autonomously to **achieve** it.
+
+Its inputs and outputs are straightforward:
+
+- **Input**: Sensor data (IMU, ultrasonic, etc.)
+- **Output**: RPM values for the four individual motors
+
+## Key Features
+
+- **Microcontroller Compatibility**: Designed to work with most available microcontrollers
+- **Accuracy**: Ensures precise control and stability
+- **Reliable Exception & Emergency Handling**: Handles failures and safety-critical situations effectively
+- **Resource Efficiency**: Optimized for minimal computational overhead
+- **Basic Maneuvers**: Capable of takeoff, landing, hovering, and directional movement
+- **Advanced Maneuvers**: Supports intricate movements as required
+
+## Modules
+
+- Mediator
+- Instruction Management (INSM)
+- Data Management (DM)
+- State Management (SM)
+- Flight Control Unit (FCU)
+
+# How does autopilot work?
+
+As mentioned earlier, instructions are sent by the ATC and received by the drone. Based on the drone's current state, the autopilot either executes or rejects the instructions.
 It is important to understand that, due to safety measures, no instructions are queued for later execution. The only exception is the `HALT` emergency instruction. Since instructions may change the drone's state, their feasibility is assessed first. If they do not comply with the `State Transition Table`, they are rejected.
+Whenever the state changes, the `Flight Control Unit` is notified. The `FCU` is responsible for executing instructions by calculating the RPM for individual motors based on sensor data. Finally, once the instruction has been fully executed, the CU sends a request to State Management to update the state.
 
-Whenever the state changes, the `Control Unit` is notified. The `CU` is responsible for executing instructions by calculating the RPM for individual motors based on sensor data. Finally, once the instruction has been fully executed, the CU sends a request to State Management to update the state.
-
-## Flying Vehicle Configuration 🪰
+# Flying Vehicle Configuration 🪰
 
 This read-only configuration helps the autopilot system make the right decisions during flight. It is strongly recommended that developers set up the configuration and build the library according to their flying vehicle's capacity and limitations.
 
@@ -27,42 +56,42 @@ As mentioned earlier, the autopilot perceives its environment through sensors an
 | -------- | ------------ | ------------------- | ----- | ------- | ------------- |
 | `0`      | `SFTYTSTFLG` | Initial safety test | Valid | Invalid | OR 0b00000001 |
 
-## Housefly Autopilot - State machine
+# Housefly Autopilot - State machine
 
 The autopilot maintains an internal state machine that determines whether an instruction received from the ATC should be executed or not. Due to safety measures, **_received instructions are never queued!_** This means they are either executed immediately or rejected. For instance, a drone should not be able to change its destination if it is already in the `Transition` state.
 
-### Ground state
+## Ground state
 
 The Ground state or `GND` refers to a stable state in which the drone is on the ground with all four rotors turned off. This should be the drone's initial state. Additionally, a successful landing operation should eventually set the state to `GND`.
 
 The `GND` state cannot be requested by an external actor (such as ATC). It can only be set by the autopilot.
 
-### Take off state
+## Take off state
 
 The Takeoff state or `TO` refers to a temporary state in which the drone is lifting off the ground. This state should only be set if the drone's current state is `GND`. A successful takeoff operation eventually sets the state to `IDLE`.
 Takeoff takes place, if the `SFTYTSTFLG` is set to true. This means an initial safety test is mandatory.
 
-### Landing state
+## Landing state
 
 The Landing state or `LND` refers to a temporary state in which the drone is descending to land on the ground. A successful landing operation eventually sets the state to `GND`.
 
-### Transition state
+## Transition state
 
 The Transition state or `TRN` refers to a temporary state in which the drone moves from one coordinate in space to another. This state should only be set if the drone's current state is `IDLE`. A successful transition operation eventually sets the state to `IDLE`.
 
-### Idle state
+## Idle state
 
 The Idle state, or IDLE, refers to a stable condition in which the drone hovers in place. The request to transition to the `IDLE` state can **only** be made internally by the autopilot.
 
-### Test state
+## Test state
 
 The Test state or `TST` refers to a temporary state in which the drone takes precautionary measures. This state should only be set if the drone's current state is `GND`.
 
-### Halt state
+## Halt state
 
 The Halt state or `HLT` refers to an immediate emergency state in which all four rotors are turned off at once. Due to safety reasons, a drone may enter this state at any time.
 
-### State Transition Table
+## State Transition Table
 
 | State | State Symbol | Type      | From                | Actors            | Flags        | To     |
 | ----- | ------------ | --------- | ------------------- | ----------------- | ------------ | ------ |

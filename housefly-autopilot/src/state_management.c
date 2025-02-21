@@ -2,6 +2,8 @@
 
 static FlightStatus flight_state;
 
+void set_initflg(unsigned char *flags) { *flags |= (1 << 1); }
+
 void set_sftytstflg(unsigned char *flags) { *flags |= (1 << 0); }
 
 void reset_sftytstflg(unsigned char *flags) { *flags &= ~(1 << 0); }
@@ -32,7 +34,7 @@ char validate_requested_state(FlightState current_state, FlightState new_state,
   case TRN_STAT:
     return current_state == IDLE_STAT ? 1 : 0;
   case IDLE_STAT:
-    return (current_state == TO_STAT && current_state == TRN_STAT) ? 1 : 0;
+    return (current_state == TO_STAT || current_state == TRN_STAT) ? 1 : 0;
   case TST_STAT:
     return current_state == GND_STAT ? 1 : 0;
   case HLT_STAT:
@@ -43,7 +45,8 @@ char validate_requested_state(FlightState current_state, FlightState new_state,
 }
 
 FlightStatus *init() {
-  // reset_flags(&flight_state.flags);
-  // reset_state(&flight_state.state);
+  reset_flags(&flight_state.flags);
+  reset_state(&flight_state.state);
+  set_initflg(&flight_state.flags);
   return &flight_state;
 }

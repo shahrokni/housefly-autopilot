@@ -77,7 +77,7 @@ The Instruction Management module is responsible for converting received instruc
 The State Management module requests these new states to be set through the Mediator module.
 However, as previously discussed, the execution of instructions is not guaranteed.
 
-# Modules - State Management
+# Module - State Management
 
 The autopilot maintains an internal state machine that determines whether an instruction received from the ATC should be executed or not. Due to safety measures, **_received instructions are never queued!_** This means they are either executed immediately or rejected.
 For instance, a drone should not be able to change its destination if it is already in the `Transition` state.
@@ -126,9 +126,10 @@ The Halt state or `HLT` refers to an immediate emergency state in which all four
 
 ## Flight Flags
 
-| Flag Bit | Flag Symbol  | Description         | 1     | 0       | Activation    |
-| -------- | ------------ | ------------------- | ----- | ------- | ------------- |
-| `0`      | `SFTYTSTFLG` | Initial safety test | Valid | Invalid | OR 0b00000001 |
+| Flag Bit | Flag Symbol  | Description               | 1     | 0       | Activation    |
+| -------- | ------------ | ------------------------- | ----- | ------- | ------------- |
+| `0`      | `SFTYTSTFLG` | Initial safety test       | Valid | Invalid | OR 0b00000001 |
+| `1`      | `INITFLG`    | Initiation completed flag | Valid | Invalid | OR 0b00000010 |
 
 # Module - Flight Control Unit (FCU) 🤖
 

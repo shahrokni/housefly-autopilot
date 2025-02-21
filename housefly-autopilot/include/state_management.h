@@ -13,15 +13,16 @@ typedef enum {
 } FlightState;
 
 typedef struct {
-  unsigned char service_ceiling;
-  unsigned char reaction_latency;
-} Vehicle;
-
-typedef struct {
   unsigned char flags;
-  unsigned char state;
-  Vehicle *vehicle;
+  FlightState state;
 } FlightStatus;
+
+/**
+ * @brief Sets inti flag to 1
+ * @param[out] flags
+ * @return void
+ */
+void set_initflg(unsigned char *flags);
 
 /**
  * @brief Sets the safety test flag to 1

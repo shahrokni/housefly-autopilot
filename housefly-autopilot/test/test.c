@@ -2,6 +2,14 @@
 #include "unity.h"
 
 /* STATE MANAGEMENT TESTS */
+
+void should_set_init_flag() {
+  char flags = 0x01;
+  set_initflg(&flags);
+  TEST_ASSERT_MESSAGE(flags == 0x03,
+                      "Should set the init flag to 1 (final binary reads 3)");
+}
+
 void should_reset_safety_test_flag() {
   char flags = 0x01;
   TEST_ASSERT_MESSAGE(flags == 0x01,
@@ -178,11 +186,98 @@ void should_validation_return_true_new_state_TRN() {
   }
 }
 
+void should_validation_return_false_new_state_IDLE() {
+  FlightState new_state = IDLE_STAT;
+  FlightState possible_invalid_current_states[] = {
+      GND_STAT, LND_STAT, NON_STAT, IDLE_STAT, TST_STAT, HLT_STAT};
+
+  int len = sizeof(possible_invalid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_invalid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 0, "Validation should return 0 (invalid)");
+    }
+  }
+}
+
+void should_validation_return_true_new_state_IDLE() {
+  FlightState new_state = IDLE_STAT;
+  FlightState possible_invalid_current_states[] = {TRN_STAT, TO_STAT};
+
+  int len = sizeof(possible_invalid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_invalid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 1, "Validation should return 1 (valid)");
+    }
+  }
+}
+
+void should_validation_return_false_new_state_TST() {
+  FlightState new_state = TST_STAT;
+  FlightState possible_invalid_current_states[] = {
+      TO_STAT, TRN_STAT, LND_STAT, NON_STAT, IDLE_STAT, TST_STAT, HLT_STAT};
+
+  int len = sizeof(possible_invalid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_invalid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 0, "Validation should return 0 (invalid)");
+    }
+  }
+}
+
+void should_validation_return_true_new_state_TST() {
+  FlightState new_state = TST_STAT;
+  FlightState possible_invalid_current_states[] = {GND_STAT};
+
+  int len = sizeof(possible_invalid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_invalid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 1, "Validation should return 1 (valid)");
+    }
+  }
+}
+
+void should_validation_always_return_true_new_state_HLT() {
+  FlightState new_state = HLT_STAT;
+  FlightState possible_valid_current_states[] = {TO_STAT,  TRN_STAT,  LND_STAT,
+                                                 NON_STAT, IDLE_STAT, TST_STAT,
+                                                 HLT_STAT, GND_STAT};
+
+  int len = sizeof(possible_valid_current_states) / sizeof(int);
+
+  for (int i = 0; i < len; i += 1) {
+    for (int j = 0; j < 256; j += 1) {
+      int result = validate_requested_state(possible_valid_current_states[i],
+                                            new_state, j);
+      TEST_ASSERT_MESSAGE(result == 1, "Validation should return 1 (valid)");
+    }
+  }
+}
+
+void should_init_flight_state_and_return_pointer() {
+  FlightStatus *flight_status_pointer = NULL;
+  TEST_ASSERT_NULL_MESSAGE(flight_status_pointer, "Should be NULL");
+  flight_status_pointer = init();
+  TEST_ASSERT_NOT_NULL_MESSAGE(flight_status_pointer, "Should NOT be NULL");
+}
+
 void setUp(void) {}
 void tearDown(void) {}
 
 int main() {
   UNITY_BEGIN();
+  RUN_TEST(should_set_init_flag);
   RUN_TEST(should_reset_safety_test_flag);
   RUN_TEST(should_set_safety_test_flag);
   RUN_TEST(should_reset_all_flags);
@@ -196,6 +291,11 @@ int main() {
   RUN_TEST(should_validation_return_true_for_new_state_LND);
   RUN_TEST(should_validation_return_false_for_new_state_TRN);
   RUN_TEST(should_validation_return_true_new_state_TRN);
+  RUN_TEST(should_validation_return_false_new_state_IDLE);
+  RUN_TEST(should_validation_return_true_new_state_IDLE);
+  RUN_TEST(should_validation_return_false_new_state_TST);
+  RUN_TEST(should_validation_always_return_true_new_state_HLT);
+  RUN_TEST(should_init_flight_state_and_return_pointer);
 
   return UNITY_END();
 }

@@ -18,6 +18,7 @@
   "files.associations": {
     "state_managment.h": "c",
     "state_management.h": "c",
-    "unity.h": "c"
+    "unity.h": "c",
+    "config_repository.h": "c"
   }
 }

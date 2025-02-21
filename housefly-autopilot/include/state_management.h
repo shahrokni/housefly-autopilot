@@ -72,6 +72,10 @@ void set_requested_state(FlightState *current_state, FlightState new_state,
 char validate_requested_state(FlightState current_state, FlightState new_state,
                               unsigned char flags);
 
+/**
+ * @brief Initiates the flight state machine
+ * @returns Returns the pointer to the flight state machine
+ */
 FlightStatus *init();
 
 #endif

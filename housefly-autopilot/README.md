@@ -71,6 +71,10 @@ The property's type is `unsigned char`, meaning it can range from 0 to 255.
 However, values below 150 are ignored by the autopilot. Although a higher `reaction_latency` may reduce instability, it can introduce (tolerable) inaccuracies.
 With a well-designed drone, a lower `reaction_latency` may enable smoother execution of acrobatic maneuvers.
 
+### weight
+
+This property defines the drone's weight. It is of type float, with kilograms (kg) as the unit. The default value is 1 kg.
+
 # Module - Instruction Management
 
 The Instruction Management module is responsible for converting received instructions from ATC into new requested states.

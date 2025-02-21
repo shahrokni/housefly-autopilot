@@ -1,3 +1,4 @@
+#include "config_repository.h"
 #include "state_management.h"
 #include "unity.h"
 
@@ -272,6 +273,20 @@ void should_init_flight_state_and_return_pointer() {
   TEST_ASSERT_NOT_NULL_MESSAGE(flight_status_pointer, "Should NOT be NULL");
 }
 
+void should_return_config_repository() {
+  ConfigRepository *config_repo_pointer = get_config();
+  TEST_ASSERT_NOT_NULL_MESSAGE(config_repo_pointer, "Should NOT be NULL");
+  TEST_ASSERT_MESSAGE(config_repo_pointer->flying_vehicle.reaction_latency ==
+                          FLYING_VEHICLE_REACTION_LATENCY,
+                      "Should have the reaction latency");
+  TEST_ASSERT_MESSAGE(config_repo_pointer->flying_vehicle.service_ceiling ==
+                          FLYING_VEHICLE_SERVICE_CEILING,
+                      "Should have the service ceiling");
+  TEST_ASSERT_MESSAGE(config_repo_pointer->flying_vehicle.weight ==
+                          FLYING_VEHICLE_WEIGHT,
+                      "Should have the weight");
+}
+
 void setUp(void) {}
 void tearDown(void) {}
 
@@ -296,6 +311,6 @@ int main() {
   RUN_TEST(should_validation_return_false_new_state_TST);
   RUN_TEST(should_validation_always_return_true_new_state_HLT);
   RUN_TEST(should_init_flight_state_and_return_pointer);
-
+  RUN_TEST(should_return_config_repository);
   return UNITY_END();
 }
